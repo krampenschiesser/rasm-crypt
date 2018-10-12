@@ -82,6 +82,6 @@ pub fn to_uint8(text: &str) -> Vec<u8> {
 }
 
 #[wasm_bindgen]
-pub fn tu_utf8(data: &[u8]) -> String {
+pub fn to_utf8(data: &[u8]) -> String {
     String::from_utf8_lossy(data).into()
 }
