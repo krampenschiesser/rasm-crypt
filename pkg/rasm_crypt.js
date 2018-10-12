@@ -200,11 +200,11 @@ function getStringFromWasm(ptr, len) {
 * @param {Uint8Array} arg0
 * @returns {string}
 */
-export function tu_utf8(arg0) {
+export function to_utf8(arg0) {
     const [ptr0, len0] = passArray8ToWasm(arg0);
     const retptr = globalArgumentPtr();
     try {
-        wasm.tu_utf8(retptr, ptr0, len0);
+        wasm.to_utf8(retptr, ptr0, len0);
         const mem = getUint32Memory();
         const rustptr = mem[retptr / 4];
         const rustlen = mem[retptr / 4 + 1];

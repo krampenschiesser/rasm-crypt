@@ -9,7 +9,7 @@ export function decrypt(arg0: Uint8Array, arg1: Uint8Array, arg2: Uint8Array, ar
 
 export function to_uint8(arg0: string): Uint8Array;
 
-export function tu_utf8(arg0: Uint8Array): string;
+export function to_utf8(arg0: Uint8Array): string;
 
 export class EncryptionResult {
 free(): void;
