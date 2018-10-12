@@ -1,0 +1,15 @@
+{
+  "name": "rasm-crypt",
+  "collaborators": [
+    "loehnert <christian.loehnert@ssi-schaefer.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "rasm_crypt_bg.wasm",
+    "rasm_crypt.js",
+    "rasm_crypt.d.ts"
+  ],
+  "module": "rasm_crypt.js",
+  "types": "rasm_crypt.d.ts",
+  "sideEffects": "false"
+}
