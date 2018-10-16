@@ -26,7 +26,6 @@ cfg_if! {
 }
 
 
-
 #[wasm_bindgen]
 pub fn scrypt_simple(password: &[u8], salt: &[u8], output_len: u8) -> Result<Vec<u8>, JsValue> {
     scrypt(password, salt, 15, 8, 1, output_len)
@@ -34,6 +33,7 @@ pub fn scrypt_simple(password: &[u8], salt: &[u8], output_len: u8) -> Result<Vec
 
 #[wasm_bindgen]
 pub fn scrypt(password: &[u8], salt: &[u8], log_n: u8, r: u32, p: u32, output_len: u8) -> Result<Vec<u8>, JsValue> {
+    utils::set_panic_hook();
     let mut output: Vec<u8> = (0..output_len).collect();
     let params = ScryptParams::new(log_n, r, p).map_err(|e| e.description().to_owned())?;
     real_scrypt(password, salt, &params, &mut output).map_err(|e| e.description().to_owned())?;
@@ -60,6 +60,7 @@ impl EncryptionResult {
 
 #[wasm_bindgen]
 pub fn encrypt(key: &[u8], nonce: &[u8], aad: &[u8], mut input: &[u8]) -> Result<EncryptionResult, JsValue> {
+    utils::set_panic_hook();
     let mut output = Vec::with_capacity(input.len());
     let res = chacha_encrypt(key, nonce, aad, &mut input, &mut output).map_err(|e| e.description().to_owned())?;
     let tag = res.to_vec();
@@ -71,6 +72,7 @@ pub fn encrypt(key: &[u8], nonce: &[u8], aad: &[u8], mut input: &[u8]) -> Result
 
 #[wasm_bindgen]
 pub fn decrypt(key: &[u8], nonce: &[u8], aad: &[u8], mut input: &[u8], tag: &[u8]) -> Result<Vec<u8>, JsValue> {
+    utils::set_panic_hook();
     let mut output = Vec::with_capacity(input.len());
     chacha_decrypt(key, nonce, aad, input, tag, &mut output).map_err(|e| format!("{:?}", e))?;
     Ok(output)
@@ -78,10 +80,12 @@ pub fn decrypt(key: &[u8], nonce: &[u8], aad: &[u8], mut input: &[u8], tag: &[u8
 
 #[wasm_bindgen]
 pub fn to_uint8(text: &str) -> Vec<u8> {
+    utils::set_panic_hook();
     text.into()
 }
 
 #[wasm_bindgen]
 pub fn to_utf8(data: &[u8]) -> String {
+    utils::set_panic_hook();
     String::from_utf8_lossy(data).into()
 }

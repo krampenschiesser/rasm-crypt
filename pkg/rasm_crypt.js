@@ -1,5 +1,15 @@
 /* tslint:disable */
-import * as wasm from './rasm_crypt_bg';
+var wasm = undefined;
+
+import("./rasm_crypt_bg.wasm").then(module => {
+    console.log("Loaded wasm!")
+    wasm = module;
+});
+
+export function isAvailable() {
+    return wasm !== undefined;
+}
+
 
 let cachegetUint8Memory = null;
 function getUint8Memory() {
@@ -219,6 +229,17 @@ export function to_utf8(arg0) {
 
     }
 
+}
+
+const __wbg_error_cc95a3d302735ca3_target = console.error;
+
+export function __wbg_error_cc95a3d302735ca3(arg0, arg1) {
+    let varg0 = getStringFromWasm(arg0, arg1);
+
+    varg0 = varg0.slice();
+    wasm.__wbindgen_free(arg0, arg1 * 1);
+
+    __wbg_error_cc95a3d302735ca3_target(varg0);
 }
 
 function freeEncryptionResult(ptr) {
